@@ -13,5 +13,12 @@ __attribute__ ((attribute-list))
 | format          | 指定函数的参数格式，用于检查printf和scanf等函数的参数类型。 |
 | constructor     | 指定函数为构造函数，在程序启动时自动执行。               |
 | destructor      | 指定函数为析构函数，在程序结束时自动执行                |
+## aligned(n)
+指定变量n字节对齐,n表示字节对齐树,不止适用于结构
+## packed
+__attribute__((packed)): 取消结构在编译过程中的优化对齐，也可以认为是1字节对齐。
+## section
+用__attribute__ 来声明一个 section 属性，主要用途是在程序编译时，将一个函数或变量放到指定的段
 
-
+## unused
+告诉编译器该变量或函数未被使用，避免编译器产生警告。
