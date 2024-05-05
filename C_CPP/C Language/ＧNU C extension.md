@@ -19,6 +19,13 @@ __attribute__ ((attribute-list))
 __attribute__((packed)): 取消结构在编译过程中的优化对齐，也可以认为是1字节对齐。
 ## section
 用__attribute__ 来声明一个 section 属性，主要用途是在程序编译时，将一个函数或变量放到指定的段
-
 ## unused
 告诉编译器该变量或函数未被使用，避免编译器产生警告。
+
+## constructor
+当在一个函数声明或定义前加上__attribute__((constructor))属性时，就会告诉编译器，在程序加载时（在main函数执行之前），需要自动调用这个函数。这个特性通常用于在程序启动时执行一些全局的初始化工作。
+constructor可以有优先级，指定优先级时，先执行优先级小的，再执行优先级大的，最后执行没有指定优先级。
+
+## destructor
+若函数被设定为destructor属性，则该函数会在main（）函数执行之后或者exit（）被调用后被自动的执行。
+
