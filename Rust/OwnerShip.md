@@ -19,3 +19,12 @@ fn main() {
 ```
 - 当 `s` 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 [`drop`](https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop)，在这里 `String` 的作者可以放置释放内存的代码。Rust 在结尾的 `}` 处自动调用 `drop`
 ### 移动
+``` rust
+    let s1 = String::from("hello");
+    let s2 = s1;// s1成为了无效引用
+
+    println!("{}, world!", s1);
+
+```
+
+![[Pasted image 20240508155330.png]]
