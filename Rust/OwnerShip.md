@@ -24,7 +24,30 @@ fn main() {
     let s2 = s1;// s1成为了无效引用
 
     println!("{}, world!", s1);
-
 ```
 
+Rust 永远也不会自动创建数据的 “深拷贝”。因此，任何 **自动** 的复制都可以被认为是对运行时性能影响较小的。
+
 ![[Pasted image 20240508155330.png]]
+***
+### 克隆
+``` rust
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {}, s2 = {}", s1, s2);
+```
+- 深度复制 `String` 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 `clone` 的通用函数。
+*** 
+### [只在栈上的数据：拷贝](https://kaisery.github.io/trpl-zh-cn/ch04-01-what-is-ownership.html#%E5%8F%AA%E5%9C%A8%E6%A0%88%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8B%B7%E8%B4%9D)
+``` rust
+    let x = 5;
+    let y = x;
+
+    println!("x = {}, y = {}", x, y);
+
+```
+- 像整型这样的在编译时已知大小的类型被整个存储在栈上，所以拷贝其实际的值是快速的
+- Rust 有一个叫做 `Copy` trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上（[第十章](https://kaisery.github.io/trpl-zh-cn/ch10-00-generics.html)将会详细讲解 trait）。如果一个类型实现了 `Copy` trait，那么一个旧的变量在将其赋值给其他变量后仍然可用。
+- Rust 不允许自身或其任何部分实现了 `Drop` trait 的类型使用 `Copy` trait。
+
