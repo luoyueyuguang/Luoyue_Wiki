@@ -167,6 +167,7 @@ fn change(some_string: &mut String) {
     some_string.push_str(", world");
 }
 ```
+- 可变引用需要原来也是可变的
 - 如果有一个对该变量的可变引用，就不能再创建对该变量的引用
 ``` rust
     let mut s = String::from("hello");
@@ -262,4 +263,40 @@ fn no_dangle() -> String {
 ***
 ### [Slice 类型](https://kaisery.github.io/trpl-zh-cn/ch04-03-slices.html#slice-%E7%B1%BB%E5%9E%8B)
 - _slice_ 允许你引用集合中一段连续的元素序列，而不用引用整个集合。slice 是一种引用，所以它没有所有权。
-- 
+***
+### [字符串 slice](https://kaisery.github.io/trpl-zh-cn/ch04-03-slices.html#%E5%AD%97%E7%AC%A6%E4%B8%B2-slice)
+- **字符串 slice**（_string slice_）是 `String` 中一部分值的引用
+``` rust
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+```
+![[Pasted image 20240514141752.png]]
+-  Rust 的 `..` range 语法
+``` rust
+let s = String::from("hello");
+
+let slice = &s[0..2];
+let slice = &s[..2];
+
+```
+
+``` rust
+let s = String::from("hello");
+
+let len = s.len();
+
+let slice = &s[3..len];
+let slice = &s[3..];
+
+```
+
+``` rust
+let s = String::from("hello");
+
+let len = s.len();
+
+let slice = &s[0..len];
+let slice = &s[..];
+```
