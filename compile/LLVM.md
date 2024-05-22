@@ -7,16 +7,22 @@ C[Backend]
 D(('source code'))-->A --> B --> C --> E(('Machine Code'))
 ```
 
-``` memraid
+``` mermaid
 flowchart LR
-	C['C Frotend']
-	For['Fortran Frotend']
-	Ada['Ada Frotend']
-	Opt['Common Optimizer']
-	X86['x86 Backend']
-	PPC['PowerPC Backend']
-	ARN
+	C[C Frotend]
+	For[Fortran Frotend]
+	Ada[Ada Frotend]
+	Opt[Common Optimizer]
+	X86[x86 Backend]
+	PPC[PowerPC Backend]
+	ARM[ARM Backend]
+	C-->Opt
+	For-->Opt
+	Ada-->Opt
+	Opt-->X86
+	Opt-->PPC
+	Opt-->ARM
 ```
 
-
+ 
 
