@@ -2,6 +2,7 @@
 resources/
 resources/resources/
 .track
-Tools/image
+Tools/image/
+Tools/opt.md
 PAC2023/
 *.png
