@@ -16,7 +16,10 @@
 `-F:指定频率`
 # offcputime
 
-
+# hyperfine
+[hyperfine](https://github.com/sharkdp/hyperfine)
+一个rust写的有趣的benchmark工具
+- `hyperfine <command>...`用来运行命令
 
 
 
