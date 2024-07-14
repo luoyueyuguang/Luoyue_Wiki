@@ -21,7 +21,11 @@
 [hyperfine](https://github.com/sharkdp/hyperfine)
 一个rust写的有趣的benchmark工具
 - `hyperfine <command>...`用来运行命令
-
+- `hyperfine -runs [times] <command>`
+- `hyperfine <command1> <command2>`
+- `hyperfine --warmup/-w`使用暖身,暖cache
+- `hyperfine --prepare/-p`使用冷cache
+- `hyperfine -P/--parameter-scan`
 
 
 
