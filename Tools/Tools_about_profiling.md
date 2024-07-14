@@ -28,7 +28,8 @@
 - `hyperfine -P/--parameter-scan　<VAR> <MIN> <MAX> <command>`从min到max代入到var里跑,例如`hyperfine -P a 1 5 'echo $a'`
 - `hyperfine --parameter-scan <VAR> <MIN> <MAX> <command> --parameter-step-size/-D <DELTA>`给定步距` hyperfine --parameter-scan delay 0.3 0.7 -D 0.2 'sleep {delay}'`
 - `hyperfine --parameter-list <VAR> <VALUES> <command>`给出不同参数来跑.
-
+- `hyperfine --shell/-S <shell>`选用shell
+- `hyperfine -N <command>`不用shell
 
 
 
