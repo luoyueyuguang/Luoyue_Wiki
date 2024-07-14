@@ -23,9 +23,11 @@
 - `hyperfine <command>...`用来运行命令
 - `hyperfine -runs [times] <command>`
 - `hyperfine <command1> <command2>`
-- `hyperfine --warmup/-w`使用暖身,暖cache
-- `hyperfine --prepare/-p`使用冷cache
-- `hyperfine -P/--parameter-scan`
+- `hyperfine --warmup/-w　[times] <command>`使用暖身,暖cache,多跑几次
+- `hyperfine --prepare/-p <command>`使用冷cache,在测试前跑某些命令
+- `hyperfine -P/--parameter-scan　<VAR> <MIN> <MAX> <command>`从min到max代入到var里跑,例如`hyperfine -P a 1 5 'echo $a'`
+- `hyperfine --parameter-scan <VAR> <MIN> <MAX> <command> --parameter-step-size/-D <DELTA>`给定步距` hyperfine --parameter-scan delay 0.3 0.7 -D 0.2 'sleep {delay}'`
+- `hyperfine --parameter-list <VAR> <VALUES> <command>`给出不同参数来跑.
 
 
 
