@@ -30,7 +30,7 @@
 - `hyperfine --parameter-list <VAR> <VALUES> <command>`给出不同参数来跑.
 - `hyperfine --shell/-S <shell>`选用shell
 - `hyperfine -N <command>`不用shell
-
+- `hyperfine`还支持导出数据
 
 
 
