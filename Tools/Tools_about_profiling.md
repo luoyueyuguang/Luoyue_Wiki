@@ -1,6 +1,5 @@
 # perf
-红帽系
-- `sudo dnf install perf`hong
+- `sudo dnf install perf`红帽系
 - `perf record`
 	生成perf.data
 	- `-F:指定采样频率`
