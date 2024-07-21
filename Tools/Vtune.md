@@ -8,6 +8,7 @@ echo 0 > /proc/sys/kernel/yama/ptrace_scope
 ``` bash
 vtune -collect [variety] -r [result_dir]
 ```
+
 ``` bash
 vtune -report hotspots -r result_directory
 ```
