@@ -66,5 +66,39 @@ A64指令编码格式
  >地址中
  >`STR Xt, [Xn, $offset]`
 - **基地址扩展模式**
-- 
+>`LDR <Xt>, [<Xn>, (<Xm>){, <extend> {<amount>}}]`
+>`STR <Xt>, [<Xn>, (<Xm>){, <extend> {<amount>}}]`
+>Xt:目标寄存器,它对应指令编码中的 Rt 字段。
+>Xn:基地址寄存器,它对应指令编码中的 Rn 字段。
+>Xm:用来表示偏移的寄存器,它对应指令编码中的 Rm 字段。
+>extend:扩展/移位指示符,默认是 LSL,它对应指令编码中的 option 字段。
+>	当 option 字段为 010 时,extend 编码为 UXTW。UXTW 表示从寄存器中提取 32
+位数据,其余高位填充 0。
+>	当 option 字段为 011 时,extend 编码为 LSL。LSL 表示逻辑左移。
+>	当 option 字段为 110 时,extend 编码为 SXTW。SXTW 表示从寄存器中提取 32 位
+数据,其余高位需要有符号扩展。
+>	当 option 字段为 111 时,extend 编码为 SXTX。SXTX 表示从寄存器中提取 64 位数据。
+>amount:索引偏移量,它对应指令编码中的 S 字段,当 extend 参数不是 LSL 时有效。
+>	当 S 字段为 0 时,amount 为 0。
+>	当 S 字段为 1 时,amount 为 3。
+- **变基模式**
+1. 前变基(pre-index)模式:先更新偏移量地址,后访问内存地址。
+2. 后变基(post-index)模式:先访问内存地址,后更新偏移量地址。
+- **前变基模式**
+>`LDR <Xt>, [<Xn|SP>, #<simm>]!`
+>更新 Xn/SP 寄存器的值为 Xn/SP 寄存器的
+值加 simm。然后,以新的 Xn/SP 寄存器的值为内存地
+址,加载该内存地址的值到 Xt 寄存器
 
+- **后变基模式**
+>`LDR <Xt>, [<Xn|SP>], #<simm>`
+>以 Xn/SP 寄存器的值为内存地址,加载
+该内存地址的值到 Xt 寄存器,然后更新 Xn 寄存
+器的值为 Xn/SP 寄存器的值加 simm
+
+- **PC相对地址**
+>`LDR <Xt>, <label>`
+>指令读取 label 所在内存地址的内容到 Xt 寄存器中。但是这个 label 必须在当前 PC 地
+址前后 1 MB 的范围内
+
+- 
