@@ -48,3 +48,13 @@ qemu-system-aarch64 \
 ``` shell
 -netdev user,id=unet,hostfwd=tcp::2222-:22 \
 ```
+可以使用 `-netdev` 和 `-device` 选项创建一个用户模式网络设备，ID 为 `unet`，并将主机的 2222 端口转发到虚拟机的 22 端口。
+``` shell
+-blockdev driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/lvm-disk/debian-bullseye-arm64 \
+```
+配置一个块设备，其驱动为 `raw`，节点名称为 `hd`，文件驱动为 `host_device`，文件名为 `/dev/lvm-disk/debian-bullseye-arm64`
+``` shell
+-serial mon:stdio \
+-display none \
+```
+使用 `-serial mon:stdio` 将监视器和虚拟机的串行控制台重定向到标准输入/输出，同时使用 `-display none` 禁用图形显示
