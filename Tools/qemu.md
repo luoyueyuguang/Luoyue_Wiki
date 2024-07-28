@@ -31,4 +31,20 @@ qemu-system-aarch64 \
    -machine type=virt,virtualization=on,pflash0=rom,pflash1=efivars \
    -m 4096 \
 ```
-定义一个aarch64主机,type为virt,开启i
+定义一个aarch64主机,type为virt,开启virtualization来在模拟里使用kvm.给pflash命名来以后覆盖默认设置.分配4096MB内存。
+``` bash
+-cpu max,pauth-impdef=on \
+-smp 4 \
+-accel tcg \
+```
+
+定义了最高4个vcpu,使用tcg加速,`pauth-impdef=on`：启用 PAUTH(pointer authentication)功能,这是 ARM 架构的用于保护指针不被篡改的功能。
+``` bash
+-device virtio-net-pci,netdev=unet \
+-device virtio-scsi-pci \
+-device scsi-hd,drive=hd \
+```
+添加和配置虚拟机中的设备
+``` shell
+-netdev user,id=unet,hostfwd=tcp::2222-:22 \
+```
