@@ -58,3 +58,10 @@ qemu-system-aarch64 \
 -display none \
 ```
 使用 `-serial mon:stdio` 将监视器和虚拟机的串行控制台重定向到标准输入/输出，同时使用 `-display none` 禁用图形显示
+``` shell
+-blockdev node-name=rom,driver=file,filename=(pwd)/pc-bios/edk2-aarch64-code.fd,read-only=true \
+-blockdev node-name=efivars,driver=file,filename=$HOME/images/qemu-arm64-efivars
+```
+使用 `-blockdev` 选项指定固件和变量文件
+***
+**调用**
