@@ -30,16 +30,13 @@
 - `hyperfine --shell/-S <shell>`选用shell
 - `hyperfine -N <command>`不用shell
 - `hyperfine`还支持导出数据
+# lmbench
+在`ostep`里看到的,可以测很多东西
+*reference:[https://www.cnblogs.com/ylxtiankong/p/18159724]*
+gcc-14.1生成时出现了一些error,`socklen_t`define就好,rpc有关的需要下载`tirpc`
+``` shell
+make #编译
+make results　#做测试,生成结果
+make see　#查看结果
+```
 
-
-
-
-
-
-
-
-
-
-
-
- 
