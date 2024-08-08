@@ -411,3 +411,5 @@ bar:= $(subst $(space),$(comma),$(foo))
 ```
 ***
 - `$(subst <from>,<to>,<text>)`:把字串`<text>`中的`<from>`字符串替换成`<to>`
+- `$(patsubst <pattern>,<replacement>,<text>)`查找`<text>`中的单词(单词以`“空格”`,`“Tab”`或`“回车”``“换行”`分隔)是否符合模式`<pattern>`,如果匹配的话,则以`<replacement>`替换。这里,`<pattern>` 可以包括通配符`%`,表示任意长度的字串。如果`<replacement>`中也包含`%`,那么,`<replacement>`中的这个`%`将是`<pattern>`中的那个 `%`所代表的字串。
+- `$(strip <string>)`去掉`<string>`字串中开头和结尾的空字符。
