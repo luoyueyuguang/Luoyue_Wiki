@@ -1,5 +1,8 @@
 ***reference:《跟我一起写Makefile》陈皓***
 ***
+`make -n`可以dry-run,模拟运行命令
+`make -d`可以用来debug
+***
 ``` shell
 target ... : prerequisites ...
 	recipe
@@ -128,6 +131,68 @@ targets : prerequisites ; command
 ***
 - `VPATH`让`make`自动去寻找文件的依赖关系,如果没有指明这个变量,make 只会在当
 前的目录中去找寻依赖文件和目标文件。如果定义了这个变量,那么,make 就会在当前目录找不到的情况下,到所指定的目录中去找寻文件了。
-- 另一个设置文件搜索路径的方法是使用`make`的`“vpath”`关键字(注意,它是全小写的),这不是变量,这是一个 make 的关键字,且使用方法比`VPATH`b
-- 
+- 另一个设置文件搜索路径的方法是使用`make`的`“vpath”`关键字(注意,它是全小写的),这不是变量,这是一个 make 的关键字,且使用方法比`VPATH`变量灵活。
+``` shell
+vpath <pattern> <directories>
+	为符合模式 <pattern> 的文件指定搜索目录 <directories>。
+vpath <pattern>
+	清除符合模式 <pattern> 的文件的搜索目录。
+vpath
+	清除所有已被设置好了的文件搜索目录。
+```
+- `vpath`使用方法中的`<pattern>`需要包含`%`字符.`%`的意思是匹配零或若干字符,例如`vpath %.h ../headers`
 ***
+``` shell
+clean:
+	rm *.o temp
+***
+.PHONY : clean
+clean :
+	rm *.o temp
+```
+- `“clean”`这个文件并不生成, “伪目标”并不是一个文件,只是一个标签,由于“伪目标”
+不是文件,所以`make`无法生成它的依赖关系和决定它是否要执行。我们只有通过显式地指明这个“目标”才能让其生效,“伪目标”的取名不能和文件名重名,不然其就失去了“伪目标”的意义了.
+- 可以使用`“.PHONY”`来显式地指明一个目标是“伪目标” ,向 make 说明,不管是否有这个文件,这个目标就是“伪目标”
+- 伪目标一般没有依赖的文件。但是,我们也可以为伪目标指定所依赖的文件。伪目标同样可以作为“默认目标”,只要将其放在第一个。
+``` shell
+all : prog1 prog2 prog3
+.PHONY : all
+```
+- `make`也可以通过隐式规则推导出伪目标
+- 目标也可以成为依赖。所以,伪目标同样也可成为依赖。
+``` shell
+.PHONY : cleanall cleanobj cleandiff
+cleanall : cleanobj cleandiff
+	rm program
+```
+***
+``` shell
+<targets ...> : <target-pattern> : <prereq-patterns ...>
+	<commands>
+	...
+```
+- `targets`定义了一系列的目标文件,可以有通配符。是目标的一个集合。
+- `target-pattern`是指明了`targets`的模式,也就是的目标集模式。
+- `prereq-patterns`是目标的依赖模式,它对`target-pattern`形成的模式再进行一次依赖目标的定义。
+``` shell
+objects = foo.o bar.o
+all: $(objects)
+$(objects): %.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+# it is equivalant to 
+foo.o : foo.c
+	$(CC) -c $(CFLAGS) foo.c -o foo.o
+bar.o : bar.c
+	$(CC) -c $(CFLAGS) bar.c -o bar.o
+```
+***
+- C/C++编译器有`-M`或`-MM`选项来生成依赖关系
+- 如果使用 GNU 的 C/C++ 编译器,得用`-MM`参数,不然,`-M`参数会把一些标准库的头文件也包含进来
+``` shell
+#GNU 组织建议把编译器为每一个源文件的自动生成的依赖关系放到一个文件中,为每一个 name.c 的文件都生成一个 name.d 的 Makefile 文件,.d 文件中就存放对应 .c 文件的依赖关系。
+%.d: %.c
+	@set -e; rm -f $@; \
+	$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+```
