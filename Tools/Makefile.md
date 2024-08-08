@@ -288,6 +288,42 @@ FOO ?= bar
 ``` shell
 dir := /foo/bar    #dir是/foo/bar加四个空格
 ```
-- MAKELEVEL变量会表示make的调用层数
+- MAKELEVEL变量会表示make的调用层数,总控的Makefile是0,子目录下的Makefile为1.
 ***
+- 可以替换变量中的共有的部分,其格式是`$(var:a=b)`或是`${var:a=b}`,其意思是`“var”`中所有以“a”字串“结尾”的“a”替换成“b”字串。这里的“结尾”意思是“空格”或是“结束符”.
+- 另外一种变量替换的技术是以“静态模式”来定义
+``` shell
+foo := a.o b.o c.o
+bar := $(foo:%.o=%.c)
+```
+- 可以把变量的值再当成变量
+``` shell
+x = y
+y = z
+a := $($(x))
+```
+- 可以使用 += 操作符给变量追加值,如果变量之前没有定义过,那么,+= 会自动变成 = ,如果前面有变量定义,那么 += 会继承于前次操作的赋值符。如果前一次的是 := ,那么 += 会以 := 作为其赋值符 
+``` shell
+objects = main.o foo.o bar.o utils.o
+objects += another.o
+```
+***
+- 如果变量是`make`的命令行参数设置的,那么`Makefile`中对这个变量的赋值会被忽略。如果想在 Makefile 中设置这类参数的值,那么,可以使用`“override”`指令.
+``` shell
+override <variable>; = <value>;
+override <variable>; := <value>;
+override <variable>; += <more text>;
 
+override define foo
+bar
+endef
+```
+***
+- 使用 define 关键字设置变量的值可以有换行,这有利于定义一系列的命令
+- define 指令后面跟的是变量的名字,而重起一行定义变量的值,定义是以 endef 关键字结束.其工作方式和“=”操作符一样。变量的值可以包含函数、命令、文字,或是其它变量.
+``` shell
+define two-lines
+echo foo
+echo $(bar)
+endef
+```
