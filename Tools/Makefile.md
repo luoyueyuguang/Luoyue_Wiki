@@ -399,4 +399,5 @@ endif
 - 函数调用,很像变量的使用,也是以`$`来标识的
 ``` shell
 $(<function> <arguments>)
+${<function> <arguments>}
 ```
