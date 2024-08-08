@@ -401,3 +401,13 @@ endif
 $(<function> <arguments>)
 ${<function> <arguments>}
 ```
+- `<function>`就是函数名,make 支持的函数不多.`<arguments>`为函数的参数,参数间以逗号分割
+``` shell
+comma:= ,
+empty:=
+space:= $(empty) $(empty)
+foo:= a b c
+bar:= $(subst $(space),$(comma),$(foo))
+```
+***
+- `$(subst <from>,<to>,<text>)`:把字串`<text>`中的`<from>`字符串替换成`<to>`
