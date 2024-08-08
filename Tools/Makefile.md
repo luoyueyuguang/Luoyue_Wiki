@@ -327,3 +327,76 @@ echo foo
 echo $(bar)
 endef
 ```
+***
+- make 运行时的系统环境变量可以在 make 开始运行时被载入到 Makefile 文件中,但是如果 Makefile中已定义了这个变量,或是这个变量由 make 命令行带入,那么系统的环境变量的值将被覆盖。(如果make 指定了“-e”参数,那么,系统环境变量将覆盖 Makefile 中定义的变量)
+- 当 make 嵌套调用时,上层 Makefile 中定义的变量会以系统环境变量的方式传递到下层的 Makefile 中。当然,默认情况下,只有通过命令行设置的变量会被传递。而定义在文件中的变量,如果要向下层 Makefile 传递,则需要使用 export 关键字来声明。
+***
+- 前面我们所讲的在 Makefile 中定义的变量都是“全局变量”,在整个文件,我们都可以访问这些变量。当然,“自动化变量”除外,如`$<`等这种类量的自动化变量就属于“规则型变量”,
+- 可以为某个目标设置局部变量,这种变量被称为`“Target-specific Variable”`,它可以和“全局变量”同名,因为它的作用范围只在这条规则以及连带规则中,所以其值也只在作用范围内有效。而不会影响规则链以外的全局变量的值。
+- 在 GNU 的 make 中,还支持模式变量(Pattern-specific Variable),通过上面的目标变量中,我们知道,变量可以定义在某个目标上。
+``` shell
+<target ...> : <variable-assignment>;
+<target ...> : override <variable-assignment>
+```
+example:
+``` shell
+prog : CFLAGS = -g
+prog : prog.o foo.o bar.o
+	$(CC) $(CFLAGS) prog.o foo.o bar.o
+	
+prog.o : prog.c
+	$(CC) $(CFLAGS) prog.c
+	
+foo.o : foo.c
+	$(CC) $(CFLAGS) foo.c
+bar.o : bar.c
+	$(CC) $(CFLAGS) bar.c
+
+#GNU make的模式变量
+%.o : CFLAGS = -O
+```
+***
+- make中有条件表达式
+- syntax如下
+``` shell
+<conditional-directive>
+<text-if-true>
+endif
+#or
+<conditional-directive>
+<text-if-true>
+else
+<text-if-false>
+endif
+```
+- `<conditional-directive>`表示条件关键字,这个关键字有四个
+1. `ifeq`比较`arg1`和`arg2`的值是否相同
+2. `ifneq`比较参数`arg1`和`arg2`的值是否不同
+``` shell
+ifeq/ifneq (<arg1>, <arg2>)
+ifeq/ifneq '<arg1>' '<arg2>'
+ifeq/ifneq "<arg1>" "<arg2>"
+ifeq/ifneq "<arg1>" '<arg2>'
+ifeq/ifneq '<arg1>' "<arg2>"
+```
+- `ifdef`,如果变量`<variable-name>`的值非空,那么表达式为真,`ifdef`只是测试一个变量是否有值,其并不会把变量扩展到当前位置.
+- `ifndef`,与`ifdef`相反
+``` shell
+ifndef <variable-name>
+ 
+#example
+foo =
+ifdef foo
+	frobozz = yes
+else
+	frobozz = no
+endif
+```
+- 在`<conditional-directive>`这一行上,多余的空格是被允许的,但是不能以 Tab 键作为开始,注释符 # 同样也是安全的,`else`和`endif`同样.
+- make 是在读取 Makefile 时就计算条件表达式的值,并根据条件表达式的值来选择语句,所以,最好不要把自动化变量(如`$@`等)放入条件表达式中,因为自动化变量是在运行时的。
+- 为了避免混乱,make 不允许把整个条件语句分成两部分放在不同的文件中
+***
+- 函数调用,很像变量的使用,也是以`$`来标识的
+``` shell
+$(<function> <arguments>)
+```
