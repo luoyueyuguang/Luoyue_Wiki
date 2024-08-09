@@ -547,7 +547,7 @@ make 命令执行后有三个退出码:
 11.  Lex Ratfor 程序时的隐含规则。`<n>.r`的依赖文件被自动推导为`n.` (Lex 生成的文件),其生成命令是:`$(LEX) $(LFALGS)`
 12.  从 C 程序、Yacc 文件或 Lex 文件创建 Lint 库的隐含规则.`<n>.ln`(lint 生成的文件)的依赖文件被自动推导为 n.c ,其生成命令是:`$(LINT) $(LINTFALGS) $(CPPFLAGS) -i `。对于`<n>.y`和`<n>.l`也是同样的规则。
 ***
-*cmake中关于命令的变量*
+*make中关于命令的变量*
 AR : 函数库打包程序。默认命令是 ar
 • AS : 汇编语言编译程序。默认命令是 as
 • CC : C 语言编译程序。默认命令是 cc
@@ -568,4 +568,19 @@ AR : 函数库打包程序。默认命令是 ar
 • TANGLE : 转换 Web 到 Pascal 语言的程序。默认命令是 tangle
 • CTANGLE : 转换 C Web 到 C。默认命令是 ctangle
 • RM : 删除文件命令。默认命令是 rm –f
+***
+*关于命令参数的变量*
+• ARFLAGS : 函数库打包程序 AR 命令的参数。默认值是 rv
+• ASFLAGS : 汇编语言编译器参数。(当明显地调用 .s 或 .S 文件时)
+• CFLAGS : C 语言编译器参数。
+• CXXFLAGS : C++ 语言编译器参数。
+• COFLAGS : RCS 命令参数。
+• CPPFLAGS : C 预处理器参数。(C 和 Fortran 编译器也会用到)。
+• FFLAGS : Fortran 语言编译器参数。
+• GFLAGS : SCCS “get”程序参数。
+• LDFLAGS : 链接器参数。(如:ld )
+• LFLAGS : Lex 文法分析器参数。
+• PFLAGS : Pascal 语言编译器参数。
+• RFLAGS : Ratfor 程序的 Fortran 编译器参数。
+• YFLAGS : Yacc 文法分析器参数。
  
