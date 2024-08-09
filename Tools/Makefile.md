@@ -413,3 +413,19 @@ bar:= $(subst $(space),$(comma),$(foo))
 - `$(subst <from>,<to>,<text>)`:把字串`<text>`中的`<from>`字符串替换成`<to>`
 - `$(patsubst <pattern>,<replacement>,<text>)`查找`<text>`中的单词(单词以`“空格”`,`“Tab”`或`“回车”``“换行”`分隔)是否符合模式`<pattern>`,如果匹配的话,则以`<replacement>`替换。这里,`<pattern>` 可以包括通配符`%`,表示任意长度的字串。如果`<replacement>`中也包含`%`,那么,`<replacement>`中的这个`%`将是`<pattern>`中的那个 `%`所代表的字串。
 - `$(strip <string>)`去掉`<string>`字串中开头和结尾的空字符。
+- `$(findstring <find>,<in>)`在字串`<in>`中查找 `<find>`字串,如果找到,那么返回 `<find>`,否则返回空字符串。
+- `$(filter <pattern...>,<text>)`,以`<pattern>`模式过滤`<text>`字符串中的单词,保留符合模式`<pattern>`的单词。可以有多个模式。
+- `$(filter-out <pattern...>,<text>)`, 以`<pattern>`模式过滤`<text>`字符串中的单词,去除符合模式`<pattern>`的单词。可以有多个模式
+- `$(sort <list>)`给字符串`<list>`中的单词排序(升序)
+- `$(word <n>,<text>)`取字符串`<text>`中第`<n>`个单词。(从一开始)
+- `$(wordlist <ss>,<e>,<text>)`,从字符串`<text>`中取从`<ss>`开始到`<e>`的单词串。`<ss>`和`<e>`都是数字
+- `$(words <text>)`统计`<text>`中字符串中的单词个数。
+- `$(firstword <text>)`取字符串`<text>`中的第一个单词。
+***
+- `$(dir <names...>)`从文件名序列`<names>`中取出目录部分。目录部分是指最后一个反斜杠(/ )之前的部分。如果没有反斜杠,那么返回` ./`
+- `$(notdir <names...>)`,:从文件名序列`<names>`中取出非目录部分。非目录部分是指最後一个反斜杠(/ )之后的部分。
+- `$(suffix <names...>)`从文件名序列`<names>`中取出各个文件名的后缀。
+- `$(basename <names...>)`从文件名序列`<names>`中取出各个文件名的前缀部分。
+- `$(addsuffix <suffix>,<names...>)`把后缀`<suffix>`加到`<names>`中的每个单词后面。
+- `$(addprefix <prefix>,<names...>)` 把前缀`<prefix>`加到`<names>`中的每个单词前面。
+- `$(join <list1>,<list2>)`把`<list2>`的单词对应地加到`<list1>`的单词后面。如果 `<list1>`的单词个数要比`<list2>`的多,那么,`<list1>`中的多出来的单词将保持原样。如果`<list2>`的单词个数要比`<list1>`多,那么,`<list2>`多出来的单词将被复制到`<list1>`中。
