@@ -452,14 +452,46 @@ foo = $(call reverse,a,b)
 ```
 ***
 - `$(origin <variable>)`origin函数不操作变量的值,只是告诉这个变量是哪里来的
-- 。Origin 函数会以其返回值来告诉你这个变量的“出生情况”,下面,是 origin 函数的返回值:
-```
+- `origin`函数会以其返回值来告诉你这个变量的“出生情况”,下面,是 origin 函数的返回值:
+``` shell
 undefined
-如果 <variable> 从来没有定义过,origin 函数返回这个值 undefined
+	如果 <variable> 从来没有定义过,origin 函数返回这个值 undefined
 default
-如果 <variable> 是一个默认的定义,比如“CC”这个变量,这种变量我们将在后面讲述。
+	如果 <variable> 是一个默认的定义,比如“CC”这个变量,这种变量我们将在后面讲述。
 environment
-如果 <variable> 是一个环境变量,并且当 Makefile 被执行时,-e 参数没有被打开。
+	如果 <variable> 是一个环境变量,并且当 Makefile 被执行时,-e 参数没有被打开。
 file
-如果 <variable> 这个变量被定义在 Makefile 中。
+	如果 <variable> 这个变量被定义在 Makefile 中。
+command line
+	如果 <variable> 这个变量是被命令行定义的。
+override
+	如果 <variable> 是被 override 指示符重新定义的。
+automatic
+	如果 <variable> 是一个命令运行中的自动化变量。
+```
+***
+- `shell`函数也不像其它的函数。顾名思义,它的参数应该就是操作系统 Shell 的命令。它和反引号\`是相同的功能.
+```　shell
+CURRENT_DIR = `pwd`
+CURRENT_DIR = $(shell pwd)
+```
+- `$(error <text ...>)`产生一个致命的错误,`<text ...>`是错误信息。
+- error 函数不会在一被使用就会产生错误信息,可以把其定义在某个变量中,并在后续的脚本中使用这个变量
+``` shell
+ERR = $(error found an error!)
+
+.PHONY: err
+
+err: $(ERR)
+```
+- `$(warning <text ...>)`输出一段警告信息,make继续执行
+***
+make 命令执行后有三个退出码:
+```
+0
+表示成功执行。
+1
+如果 make 运行时出现任何错误,其返回 1。
+2
+如果你使用了 make 的“-q”选项,并且 make 使得一些目标不需要更新,那么返回 2。
 ```
