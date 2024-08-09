@@ -429,3 +429,37 @@ bar:= $(subst $(space),$(comma),$(foo))
 - `$(addsuffix <suffix>,<names...>)`把后缀`<suffix>`加到`<names>`中的每个单词后面。
 - `$(addprefix <prefix>,<names...>)` 把前缀`<prefix>`加到`<names>`中的每个单词前面。
 - `$(join <list1>,<list2>)`把`<list2>`的单词对应地加到`<list1>`的单词后面。如果 `<list1>`的单词个数要比`<list2>`的多,那么,`<list1>`中的多出来的单词将保持原样。如果`<list2>`的单词个数要比`<list1>`多,那么,`<list2>`多出来的单词将被复制到`<list1>`中。
+***
+- `$(foreach <var>,<list>,<text>)`foreach函数,用来做循环,表示把参数`<list>`中的单词逐一取出放到参数`<var>`所指定的变量中,然后再执行`<text>`所包含的表达式
+- 每一次`<text>`会返回一个字符串,循环过程中,`<text>`的所返回的每个字符串会以空格分隔,最后当整个循环结束时,`<text>`所返回的每个字符串所组成的整个字符串(以空格分隔)将会是`foreach`函数的返回值。
+``` shell
+names := a b c d
+files := $(foreach n,$(names),$(n).o).
+
+# a.o b.o c.o d.o
+```
+- foreach 中的`<var>`参数是一个临时的局部变量,`foreach`函数执行完后,参数`<var>`的变量将不在作用,其作用域只在`foreach`函数当中
+***
+- if函数,`$(if <condition>,<then-part>)`或`$(if <condition>,<then-part>,<else-part>)`,很像`ifeq`.
+-  if 函数的参数可以是两个,也可以是三个。`<condition>`参数是`if`的表达式,如果其返回的为非空字符串,那么这个表达式就相当于返回真,于是,`<then-part>`会被计算,否则 `<else-part>`会被计算
+- if 函数的返回值是,如果`<condition>`为真(非空字符串),那个`<then-part>`会是整个函数的返回值,如果`<condition>`为假(空字符串),那么`<else-part>`会是整个函数的返回值,此时如果`<else-part>`没有被定义,那么,整个函数返回空字串。
+***
+- `$(call <expression>,<parm1>,<parm2>,...,<parmn>)` make 执行这个函数时,`<expression>`参数中的变量,如`$(1)、$(2)`等,会被参数`<parm1>,<parm2>,<parm3>`依次取代。而`<expression` 的返回值就是 call 函数的返回值
+``` shell
+reverse = $(1) $(2)
+foo = $(call reverse,a,b)
+#a b
+```
+***
+- `$(origin <variable>)`origin函数不操作变量的值,只是告诉这个变量是哪里来的
+- 。Origin 函数会以其返回值来告诉你这个变量的“出生情况”,下面,是 origin 函数的返回值:
+```
+undefined
+如果 <variable> 从来没有定义过,origin 函数返回这个值 undefined
+default
+如果 <variable> 是一个默认的定义,比如“CC”这个变量,这种变量我们将在后面讲述。
+environment
+如果 <variable> 是一个环境变量,并且当 Makefile 被执行时,-e 参数没有被打开。
+file
+如果 <variable> 这个变量被定义在 Makefile 中。
+```
