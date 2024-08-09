@@ -540,9 +540,32 @@ make 命令执行后有三个退出码:
  .r $(FC) –F $(FFLAGS) $(RFLAGS)
 ```
 6. 编译 Modula-2 程序的隐含规则。`<n>.sym`的目标的依赖目标会自动推导为`<n>.def`,并且其生成命令是:`$(M2C) $(M2FLAGS)$(DEFFLAGS)`.`<n>.o`的目标的依赖目标会自动推导为`<n>.mod`,并且其生成命令是:`$(M2C) $(M2FLAGS) $(MODFLAGS)`。
-7. 汇编和汇编预处理的隐含规则`<n>.o`的目标的依赖目标会自动推导为`<n>.s`,默认使用编译器`as`,并且其生成命令是:`$ (AS) $(ASFLAGS)`.`<n>.s 的目标的依赖目标会自动推导为 <n>.S ,默认使用 C 预编译器 cpp ,并且
-其生成命令是:$(AS) $(ASFLAGS) 。
-8. 链接 Object 文件的隐含规则。
-<n> 目标依赖于 <n>.o ,通过运行 C 的编译器来运行链接程序生成(一般是 ld ),其生成命令
-是:$(CC) $(LDFLAGS) <n>.o $(LOADLIBES) $(LDLIBS) 。这个规则对于只有一个源文件的工程
-有效,同时也对多个 Object 文件(由不同的源文件生成)的也有效。
+7. 汇编和汇编预处理的隐含规则`<n>.o`的目标的依赖目标会自动推导为`<n>.s`,默认使用编译器`as`,并且其生成命令是:`$ (AS) $(ASFLAGS)`.`<n>.s 的目标的依赖目标会自动推导为 <n>.S ,默认使用 C 预编译器 cpp ,并且其生成命令是:$(AS) $(ASFLAGS) 。
+8. 链接 Object 文件的隐含规则。`<n>`目标依赖于`<n>.o`,通过运行 C 的编译器来运行链接程序生成(一般是 ld ),其生成命令是:`$(CC) $(LDFLAGS) <n>.o $(LOADLIBES) $(LDLIBS)`。这个规则对于只有一个源文件的工程有效,同时也对多个 Object 文件(由不同的源文件生成)的也有效。
+9. Yacc C 程序时的隐含规则,`<n>.c`的依赖文件被自动推导为`n.y`(Yacc 生成的文件),其生成命令是:`$(YACC) $(YFALGS)`
+10.  Lex C 程序时的隐含规则。`<n>.c`的依赖文件被自动推导为`n.l`(Lex 生成的文件),其生成命令是:`$(LEX) $(LFALGS)`
+11.  Lex Ratfor 程序时的隐含规则。`<n>.r`的依赖文件被自动推导为`n.` (Lex 生成的文件),其生成命令是:`$(LEX) $(LFALGS)`
+12.  从 C 程序、Yacc 文件或 Lex 文件创建 Lint 库的隐含规则.`<n>.ln`(lint 生成的文件)的依赖文件被自动推导为 n.c ,其生成命令是:`$(LINT) $(LINTFALGS) $(CPPFLAGS) -i `。对于`<n>.y`和`<n>.l`也是同样的规则。
+***
+*cmake中关于命令的变量*
+AR : 函数库打包程序。默认命令是 ar
+• AS : 汇编语言编译程序。默认命令是 as
+• CC : C 语言编译程序。默认命令是 cc
+• CXX : C++ 语言编译程序。默认命令是 g++
+• CO : 从 RCS 文件中扩展文件程序。默认命令是 co
+• CPP : C 程序的预处理器(输出是标准输出设备)。默认命令是 $(CC) –E
+• FC : Fortran 和 Ratfor 的编译器和预处理程序。默认命令是 f77
+• GET : 从 SCCS 文件中扩展文件的程序。默认命令是 get
+• LEX : Lex 方法分析器程序(针对于 C 或 Ratfor)。默认命令是 lex
+• PC : Pascal 语言编译程序。默认命令是 pc
+• YACC : Yacc 文法分析器(针对于 C 程序)。默认命令是 yacc
+ • YACCR : Yacc 文法分析器(针对于 Ratfor 程序)。默认命令是 yacc –r
+• MAKEINFO : 转换 Texinfo 源文件(.texi)到 Info 文件程序。默认命令是 makeinfo
+• TEX : 从 TeX 源文件创建 TeX DVI 文件的程序。默认命令是 tex
+• TEXI2DVI : 从 Texinfo 源文件创建军 TeX DVI 文件的程序。默认命令是 texi2dvi
+• WEAVE : 转换 Web 到 TeX 的程序。默认命令是 weave
+• CWEAVE : 转换 C Web 到 TeX 的程序。默认命令是 cweave
+• TANGLE : 转换 Web 到 Pascal 语言的程序。默认命令是 tangle
+• CTANGLE : 转换 C Web 到 C。默认命令是 ctangle
+• RM : 删除文件命令。默认命令是 rm –f
+ 
