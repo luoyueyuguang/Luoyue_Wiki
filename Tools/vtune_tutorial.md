@@ -12,3 +12,7 @@ vtune -collect [variety] -r [result_dir]
 ``` bash
 vtune -report hotspots -r result_directory
 ```
+跑mpi程序时
+``` bash
+mpirun -n 48 -ppn 24 vtune -collect hpc-performance -data-limit=0 -r my_result_dir a.out
+```
