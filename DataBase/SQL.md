@@ -66,5 +66,56 @@ CREATE TABLE < 表名 >
 　- INTEGER 型
 　  用来指定存储整数的列的数据类型（数字型），不能存储小数。
 　 - CHAR 型
-　   CHAR 是 CHARACTER（字符）的缩写，是用来指定存储字符串的列的数据类型（字符型）。
+　   CHAR 是 CHARACTER（字符）的缩写，是用来指定存储字符串的列的数据类型（字符型）。以定长字符串的形式存储
 　  - VARCHAR 型
+　  　用来指定存储字符串的列的数据类型 (字符串类型)，也可以通过括号内的数字来指定字符串的长度(最大长度)。但该类型的列是以可变字符串的形式来保存字符串的。
+　  - DATE型
+　  　用来指定存储日期（年月日）的列的数据类型（日期型）。
+- 约束是除了数据类型之外，对列中存储的数据进行限制或者追加条件的功能。
+　可以设置`NOT NULL`约束，代表无空白。
+　也可以设置主键约束，即`PRIMARY KEY`
+## 表的删除和更新
+``` SQL
+DROP TABLE < 表名 >；
+```
+
+``` SQL
+ALTER TABLE < 表名 > ADD COLUMN < 列的定义 > ；
+```
+``` SQL
+ALTER TABLE < 表名 > DROP COLUMN < 列名 > ；
+# 某些DB中可以这样写
+ALTER TABLE <表名> DROP < 列名 > ；
+# 某些可以这样写
+ALTER TABLE <表名> DROP （ < 列名 >，<列名 > ，……）；
+```
+
+``` SQL
+-- DML ：插入数据
+BEGIN TRANSACTION;
+INSERT INTO Product VALUES ('0001', 'T恤衫 ', ' 衣服 ',
+1000, 500, '2009-09-20');
+INSERT INTO Product VALUES ('0002', ' 打孔器 ', ' 办公用品 ',
+500, 320, '2009-09-11');
+INSERT INTO Product VALUES ('0003', ' 运动T恤 ', ' 衣服 ',
+4000, 2800, NULL);
+INSERT INTO Product VALUES ('0004', ' 菜刀 ',
+ ' 厨房用具 ',
+3000, 2800, '2009-09-20');
+INSERT INTO Product VALUES ('0005', ' 高压锅', ' 厨房用具 ',
+6800, 5000, '2009-01-15');
+INSERT INTO Product VALUES ('0006', ' 叉子',
+ ' 厨房用具 ',
+500, NULL, '2009-09-20');
+INSERT INTO Product VALUES ('0007', ' 擦菜板 ', ' 厨房用具 ',
+880, 790, '2008-04-28');
+INSERT INTO Product VALUES ('0008', ' 圆珠笔', ' 办公用品 ',
+100, NULL,'2009-11-11');
+COMMIT;
+```
+
+## SELECT语句
+``` SQL
+SELECT < 列名 > ，……
+FROM < 表名 > ；
+```
