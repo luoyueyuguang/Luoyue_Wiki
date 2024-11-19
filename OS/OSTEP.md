@@ -76,3 +76,5 @@ $T_{响应时间} = T_{首次运行}−T_{到达时间}$
 $physical\space address = virtual\space address + base$
 物理地址由虚拟地址加上基址寄存器中的内容得到
 
+
+## 持久性
