@@ -38,3 +38,7 @@ Snakemake 遵循[GNU Make](https://www.gnu.org/software/make)范式：工作流�
 - `--set-threads rule=<num>`设置rule的线程数
 - `--set-resources myrule:partition="foo"`设置res数
 - `--profile myprofile`myprofile文件夹里是配置文件，里面可以放yaml文件
+- 可以使用以下命令生成图
+- `snakemake --dag | dot | display`
+- `snakemake --dag | dot -Tpdf > dag.pdf`
+- `snakemake --forceall --dag | dot -Tpdf > dag.pdf`
