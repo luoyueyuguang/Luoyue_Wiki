@@ -1,0 +1,1 @@
+$$当0\le x \le \frac{\pi}{2}时,\lim\limits_{n \to \infty} \sqrt[n]{\sin ^{n}x+\cos ^{n}x} $$
