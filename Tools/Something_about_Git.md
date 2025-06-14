@@ -1,4 +1,3 @@
-## GitHub 建仓库
 ``` shell
 echo "# my_configuration" >> README.md
 git init
