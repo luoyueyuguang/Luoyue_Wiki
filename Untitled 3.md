@@ -7,3 +7,7 @@ $$
 \int_{a}^{b}f(x)dx=\lim\limits_{n\to \infty} \sum_{i=1}^{n}f(a + \frac{b-a}{n}i)
  \frac{b-a}{n}
 $$
+
+$$
+\mathbf{A}^\top \mathbf{A} \mathbf{x} = \mathbf{A}^\top \mathbf{b}
+$$
