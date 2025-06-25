@@ -11,3 +11,12 @@ $$
 $$
 \mathbf{A}^\top \mathbf{A} \mathbf{x} = \mathbf{A}^\top \mathbf{b}
 $$
+$$
+\mathbf{A} = 
+\left | \begin{matrix}
+1 & -{2}   & 2 \\
+-2 &-2 & 4  \\
+2 & 4 & -2 \\
+\end{matrix} \right | 
+Q^{-1}AQ
+$$
